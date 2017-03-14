@@ -38,7 +38,7 @@ class ViewController: UIViewController {
     private func textFieldAction() {
         textField.rx.text
             .orEmpty                                            //textField.rx.text sends <String?> events. Here I ignore any nil to have only <String> events
-            .distinctUntilChanged()                             //When textField starts or ends beeing first responder it sends current text as <String> event. DistinctUntilChanged will propagete only those string which are diffrent than previous one.
+            .distinctUntilChanged()                             //only fire if the value is different than the last one.
             .debounce(0.3, scheduler: MainScheduler.instance)   //Here we wait 0.3 seconds to be sure that user doesn't want to tap multiple times
             .subscribe(onNext: {[weak self] text in
                 self?.search(withQuery: text)
